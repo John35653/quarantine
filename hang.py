@@ -21,8 +21,8 @@ POSSIBLE_WORDS_1P: list = (
 )
 
 AVAILABLE_LETTERS = [
-"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-"q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+    "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 ]
 
 MAIN_MENU_DONE: bool = False
@@ -34,6 +34,7 @@ TWO_PLAYER: bool = False
 ONE_PLAYER_GIVE_HINT: bool = False
 ONE_PLAYER_OPTIONAL_HINT: bool = False
 GAME_BEGINS: bool = False
+GAME_WIN: bool = False
 GAME_OVER: bool = False
 UNDERSCORE_WORD: str = ""
 DIFFICULTY_CHOICE: str = ""
@@ -76,8 +77,8 @@ def usage_message() -> None:
 def main() -> None:
     """This is the main function of the hangman program"""
     global ONE_PLAYER_SCREEN_DONE, TWO_PLAYER_SCREEN_DONE, ONE_PLAYER, ONE_PLAYER_GIVE_HINT
-    global TWO_PLAYER, GUESSES, MAIN_MENU_DONE, DIFFICULTY_CHOICE
-    global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER
+    global TWO_PLAYER, GUESSES, MAIN_MENU_DONE, DIFFICULTY_CHOICE, UNDERSCORE_WORD
+    global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER, GAME_WIN
 
     # ---------------------------------------PSEUDO-MAIN-MENU---------------------------------------
 
@@ -223,7 +224,6 @@ Enjoy!!! 787482
             elif GUESSES == 6:
                 clear_terminal()
                 final_wrong()
-                # TODO: make a gameover art, for now printing gameover as a placeholder
                 game_over_screen()
                 GAME_OVER = True
                 break
@@ -232,9 +232,7 @@ Enjoy!!! 787482
             if not GAME_BEGINS:
                 UNDERSCORE_WORD = "_" * len(ANSWER)
                 GAME_BEGINS = True
-            print(
-                UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES) # pylint: disable=possibly-used-before-assignment, used-before-assignment
-            )
+            print(UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES))
             print("\nAvailable Letters:")
             for letter in AVAILABLE_LETTERS:
                 print(letter.upper(), end=" ")
@@ -245,7 +243,8 @@ Enjoy!!! 787482
             ).lower()
             if len(guessed_char) > 1:
                 exit_check(guessed_char)
-                print("Please choose a letter from Available Letters")
+                # print("Please choose a letter from Available Letters")
+                usage_message()
                 continue
             if (guessed_char in AVAILABLE_LETTERS) and (guessed_char in ANSWER):
                 new_word = ""
@@ -255,6 +254,10 @@ Enjoy!!! 787482
                     else:
                         new_word += UNDERSCORE_WORD[i]
                 UNDERSCORE_WORD = new_word
+                if UNDERSCORE_WORD == ANSWER:
+                    you_win_screen()
+                    GAME_WIN = True
+                    break
                 continue
             elif (guessed_char in AVAILABLE_LETTERS) and (guessed_char not in ANSWER):
                 for i, char in enumerate(AVAILABLE_LETTERS):
@@ -273,7 +276,7 @@ Enjoy!!! 787482
                 time.sleep(1.5)
                 continue
 
-        while GAME_OVER:
+        while GAME_OVER or GAME_WIN:
             # TODO: placeholder for asking if the player would like to play again, this is not working right now
             user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
             exit_check(user_answer)
@@ -295,6 +298,7 @@ Enjoy!!! 787482
                 GAME_BEGINS = False
                 UNDERSCORE_WORD = ""
                 GUESSES = 0
+                GAME_WIN = False
                 GAME_OVER = False
             elif user_answer in ("n", "no"):
                 print("Thank you for playing, have a wonderful day!")
@@ -316,10 +320,6 @@ if __name__ == "__main__":
 # TODO: need to make a copy of AVAILABLE_LETTERS that can be changed on when the player is playing
 # and if the user chooses to play again, the copy can be taken off of the stack and a new copy can
 # be made for the new game
-
-
-
-
 
 
 # TODO: CONTINUE WORKING ON THE PLAYER BEING ABLE TO RESTART THE GAME IF THEY CHOOSE TO PLAY AGAIN
