@@ -198,7 +198,6 @@ Enjoy!!! 787482
         # ---------------------------------------END-OF-MAIN-MENU-----------------------------------
         # ------------------------------------------GAME-BEGINS-------------------------------------
         while MAIN_MENU_DONE and not GAME_OVER:
-            print("got here")
             if ONE_PLAYER:
                 ANSWER = random.choice(POSSIBLE_WORDS_1P)
                 ONE_PLAYER = False
@@ -224,8 +223,8 @@ Enjoy!!! 787482
             elif GUESSES == 6:
                 clear_terminal()
                 final_wrong()
-                print("Game Over")
                 # TODO: make a gameover art, for now printing gameover as a placeholder
+                game_over_screen()
                 GAME_OVER = True
                 break
 

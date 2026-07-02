@@ -57,23 +57,26 @@ def fifth_wrong() -> None: # pylint: disable=missing-function-docstring
 
 
 def final_wrong() -> None: # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |  O")
-    print("   | \\|/")
-    print("   | / \\")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
+    print("""
+    _______
+       |  O
+       | \\|/
+       | / \\
+       |   
+    ¯¯¯¯¯¯¯
+
+""")
 
 def main_menu_screen() -> None: # pylint: disable=missing-function-docstring
     print("""\033[91m
-     _   _                                         
-    | | | |                                        
-    | |_| | __ _ _ __   __ _ _ __ ___   __ _ _ __  
-    |  _  |/ _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
-    | | | | (_| | | | | (_| | | | | | | (_| | | | |
-    \_| |_/\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
-                        __/ |                      
-                       |___/      \033[0m                
+ _   _                                         
+| | | |                                        
+| |_| | __ _ _ __   __ _ _ __ ___   __ _ _ __  
+|  _  |/ _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
+| | | | (_| | | | | (_| | | | | | | (_| | | | |
+\_| |_/\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
+                    __/ |                      
+                   |___/      \033[0m                
 
 
 At any point in time if you want to \033[1;93mquit the game\033[0m, type \033[1;93mExit\033[0m or \033[1;93mexit\033[0m
