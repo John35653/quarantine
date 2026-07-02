@@ -197,106 +197,106 @@ Enjoy!!! 787482
             usage_message()
         # ---------------------------------------END-OF-MAIN-MENU-----------------------------------
         # ------------------------------------------GAME-BEGINS-------------------------------------
+        while MAIN_MENU_DONE:
+            print("got here")
+            if ONE_PLAYER:
+                ANSWER = random.choice(POSSIBLE_WORDS_1P)
+                ONE_PLAYER = False
 
-        print("got here")
-        if ONE_PLAYER:
-            ANSWER = random.choice(POSSIBLE_WORDS_1P)
-            ONE_PLAYER = False
+            if GUESSES == 0:
+                clear_terminal()
+                beginning()
+            elif GUESSES == 1:
+                clear_terminal()
+                first_wrong()
+            elif GUESSES == 2:
+                clear_terminal()
+                second_wrong()
+            elif GUESSES == 3:
+                clear_terminal()
+                third_wrong()
+            elif GUESSES == 4:
+                clear_terminal()
+                fourth_wrong()
+            elif GUESSES == 5:
+                clear_terminal()
+                fifth_wrong()
+            elif GUESSES == 6:
+                clear_terminal()
+                final_wrong()
+                print("Game Over")
+                # TODO: make a gameover art, for now printing gameover as a placeholder
+                GAME_OVER = True
+                break
 
-        if GUESSES == 0:
-            clear_terminal()
-            beginning()
-        elif GUESSES == 1:
-            clear_terminal()
-            first_wrong()
-        elif GUESSES == 2:
-            clear_terminal()
-            second_wrong()
-        elif GUESSES == 3:
-            clear_terminal()
-            third_wrong()
-        elif GUESSES == 4:
-            clear_terminal()
-            fourth_wrong()
-        elif GUESSES == 5:
-            clear_terminal()
-            fifth_wrong()
-        elif GUESSES == 6:
-            clear_terminal()
-            final_wrong()
-            print("Game Over")
-            # TODO: make a gameover art, for now printing gameover as a placeholder
-            GAME_OVER = True
-            break
+            # PRINTING THE HIDDEN WORD AND THE AVAILABLE LETTERS LEFT TO USE
+            if not GAME_BEGINS:
+                UNDERSCORE_WORD = "_" * len(ANSWER)
+                GAME_BEGINS = True
+            print(
+                UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES) # pylint: disable=possibly-used-before-assignment, used-before-assignment
+            )
+            print("\nAvailable Letters:")
+            for letter in AVAILABLE_LETTERS:
+                print(letter.upper(), end=" ")
+            print(ANSWER)  # TODO: remove before finishing
 
-        # PRINTING THE HIDDEN WORD AND THE AVAILABLE LETTERS LEFT TO USE
-        if not GAME_BEGINS:
-            UNDERSCORE_WORD = "_" * len(ANSWER)
-            GAME_BEGINS = True
-        print(
-            UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES) # pylint: disable=possibly-used-before-assignment, used-before-assignment
-        )
-        print("\nAvailable Letters:")
-        for letter in AVAILABLE_LETTERS:
-            print(letter.upper(), end=" ")
-        print(ANSWER)  # TODO: remove before finishing
+            guessed_char = input(
+                "\nPlease enter your choice from Available Letters: "
+            ).lower()
+            if len(guessed_char) > 1:
+                exit_check(guessed_char)
+                print("Please choose a letter from Available Letters")
+                continue
+            if (guessed_char in AVAILABLE_LETTERS) and (guessed_char in ANSWER):
+                new_word = ""
+                for i, char in enumerate(ANSWER):
+                    if guessed_char == char:
+                        new_word += guessed_char
+                    else:
+                        new_word += UNDERSCORE_WORD[i]
+                UNDERSCORE_WORD = new_word
+                continue
+            elif (guessed_char in AVAILABLE_LETTERS) and (guessed_char not in ANSWER):
+                for i, char in enumerate(AVAILABLE_LETTERS):
+                    if guessed_char == char:
+                        AVAILABLE_LETTERS[i] = "_"
+                        break
+                GUESSES += 1
+                print("That is not correct. Plase try again.")
+                time.sleep(1.5)
+                continue
+            else:
+                print("You have already guessed that letter. Please try again.")
+                time.sleep(1.5)
+                continue
 
-        guessed_char = input(
-            "\nPlease enter your choice from Available Letters: "
-        ).lower()
-        if len(guessed_char) > 1:
-            exit_check(guessed_char)
-            print("Please choose a letter from Available Letters")
-            continue
-        if (guessed_char in AVAILABLE_LETTERS) and (guessed_char in ANSWER):
-            new_word = ""
-            for i, char in enumerate(ANSWER):
-                if guessed_char == char:
-                    new_word += guessed_char
-                else:
-                    new_word += UNDERSCORE_WORD[i]
-            UNDERSCORE_WORD = new_word
-            continue
-        elif (guessed_char in AVAILABLE_LETTERS) and (guessed_char not in ANSWER):
-            for i, char in enumerate(AVAILABLE_LETTERS):
-                if guessed_char == char:
-                    AVAILABLE_LETTERS[i] = "_"
-                    break
-            GUESSES += 1
-            print("That is not correct. Plase try again.")
-            time.sleep(1.5)
-            continue
-        else:
-            print("You have already guessed that letter. Please try again.")
-            time.sleep(1.5)
-            continue
+            if GAME_OVER:
+                # TODO: placeholder for asking if the player would like to play again, this is not working right now
+                user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
+                exit_check(user_answer)
+                # TODO: reset flags and variables to their previous state if the user wants to play again, use
+                # ONE_PLAYER and TWO_PLAYER flags
+                if user_answer in ("y", "yes"):
+                    if ONE_PLAYER:
+                        ONE_PLAYER_SCREEN_DONE = False
+                        ONE_PLAYER = False
+                        ONE_PLAYER_GIVE_HINT = False
+                        ONE_PLAYER_OPTIONAL_HINT = False
+                        DIFFICULTY_CHOICE = ""
+                    if TWO_PLAYER:
+                        TWO_PLAYER_SCREEN_DONE = False
+                        TWO_PLAYER = False
+                        PLAYER_HINT = ""
+                    MAIN_MENU_DONE = False
+                    ANSWER = ""
+                    GAME_BEGINS = False
+                    UNDERSCORE_WORD = ""
+                    GUESSES = 0
+                    GAME_OVER = False
+                continue
 
-        if GAME_OVER:
-            # TODO: placeholder for asking if the player would like to play again, this is not working right now
-            user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
-            exit_check(user_answer)
-            # TODO: reset flags and variables to their previous state if the user wants to play again, use
-            # ONE_PLAYER and TWO_PLAYER flags
-            if user_answer in ("y", "yes"):
-                if ONE_PLAYER:
-                    ONE_PLAYER_SCREEN_DONE = False
-                    ONE_PLAYER = False
-                    ONE_PLAYER_GIVE_HINT = False
-                    ONE_PLAYER_OPTIONAL_HINT = False
-                    DIFFICULTY_CHOICE = ""
-                if TWO_PLAYER:
-                    TWO_PLAYER_SCREEN_DONE = False
-                    TWO_PLAYER = False
-                    PLAYER_HINT = ""
-                MAIN_MENU_DONE = False
-                ANSWER = ""
-                GAME_BEGINS = False
-                UNDERSCORE_WORD = ""
-                GUESSES = 0
-                GAME_OVER = False
-            continue
-
-    sys.exit()
+        sys.exit()
 
 
 if __name__ == "__main__":
