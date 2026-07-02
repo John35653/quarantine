@@ -197,7 +197,7 @@ Enjoy!!! 787482
             usage_message()
         # ---------------------------------------END-OF-MAIN-MENU-----------------------------------
         # ------------------------------------------GAME-BEGINS-------------------------------------
-        while MAIN_MENU_DONE:
+        while MAIN_MENU_DONE and not GAME_OVER:
             print("got here")
             if ONE_PLAYER:
                 ANSWER = random.choice(POSSIBLE_WORDS_1P)
@@ -263,40 +263,46 @@ Enjoy!!! 787482
                         AVAILABLE_LETTERS[i] = "_"
                         break
                 GUESSES += 1
-                print("That is not correct. Plase try again.")
-                time.sleep(1.5)
+                if GUESSES < 6:
+                    print("That is not correct. Plase try again.")
+                    time.sleep(1.5)
+                else:
+                    print("Oops, you're all out of guesses.")
                 continue
-            else:
+            elif GUESSES:
                 print("You have already guessed that letter. Please try again.")
                 time.sleep(1.5)
                 continue
 
-            if GAME_OVER:
-                # TODO: placeholder for asking if the player would like to play again, this is not working right now
-                user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
-                exit_check(user_answer)
-                # TODO: reset flags and variables to their previous state if the user wants to play again, use
-                # ONE_PLAYER and TWO_PLAYER flags
-                if user_answer in ("y", "yes"):
-                    if ONE_PLAYER:
-                        ONE_PLAYER_SCREEN_DONE = False
-                        ONE_PLAYER = False
-                        ONE_PLAYER_GIVE_HINT = False
-                        ONE_PLAYER_OPTIONAL_HINT = False
-                        DIFFICULTY_CHOICE = ""
-                    if TWO_PLAYER:
-                        TWO_PLAYER_SCREEN_DONE = False
-                        TWO_PLAYER = False
-                        PLAYER_HINT = ""
-                    MAIN_MENU_DONE = False
-                    ANSWER = ""
-                    GAME_BEGINS = False
-                    UNDERSCORE_WORD = ""
-                    GUESSES = 0
-                    GAME_OVER = False
-                continue
-
-        sys.exit()
+        while GAME_OVER:
+            # TODO: placeholder for asking if the player would like to play again, this is not working right now
+            user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
+            exit_check(user_answer)
+            # TODO: reset flags and variables to their previous state if the user wants to play again, use
+            # ONE_PLAYER and TWO_PLAYER flags
+            if user_answer in ("y", "yes"):
+                if ONE_PLAYER:
+                    ONE_PLAYER_SCREEN_DONE = False
+                    ONE_PLAYER = False
+                    ONE_PLAYER_GIVE_HINT = False
+                    ONE_PLAYER_OPTIONAL_HINT = False
+                    DIFFICULTY_CHOICE = ""
+                if TWO_PLAYER:
+                    TWO_PLAYER_SCREEN_DONE = False
+                    TWO_PLAYER = False
+                    PLAYER_HINT = ""
+                MAIN_MENU_DONE = False
+                ANSWER = ""
+                GAME_BEGINS = False
+                UNDERSCORE_WORD = ""
+                GUESSES = 0
+                GAME_OVER = False
+            elif user_answer in ("n", "no"):
+                print("Thank you for playing, have a wonderful day!")
+                sys.exit()
+            else:
+                usage_message()
+        # sys.exit()
 
 
 if __name__ == "__main__":
