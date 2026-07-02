@@ -2,72 +2,85 @@
 
 # pylint: disable=anomalous-backslash-in-string
 
-def beginning() -> None: # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |   ")
-    print("   |   ")
-    print("   |   ")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
+
+def beginning() -> None:  # pylint: disable=missing-function-docstring
+    print("""
+_______
+   |   
+   |   
+   |   
+   |   
+¯¯¯¯¯¯¯
+""")
 
 
 def first_wrong() -> None:  # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |  O")
-    print("   |   ")
-    print("   |   ")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
+    print("""
+_______
+   |  O
+   |   
+   |   
+   |   
+¯¯¯¯¯¯¯
+""")
 
 
 def second_wrong() -> None:  # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |  O")
-    print("   |  |")
-    print("   |   ")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
-
-
-def third_wrong() -> None: # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |  O")
-    print("   | \\|")
-    print("   |   ")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
-
-
-def fourth_wrong() -> None: # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |  O")
-    print("   | \\|/")
-    print("   |   ")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
-
-
-def fifth_wrong() -> None: # pylint: disable=missing-function-docstring
-    print("_______")
-    print("   |  O")
-    print("   | \\|/")
-    print("   |   \\")
-    print("   |   ")
-    print("¯¯¯¯¯¯¯")
-
-
-def final_wrong() -> None: # pylint: disable=missing-function-docstring
     print("""
-    _______
-       |  O
-       | \\|/
-       | / \\
-       |   
-    ¯¯¯¯¯¯¯
-
+_______
+   |  O
+   |  |
+   |   
+   |   
+¯¯¯¯¯¯¯
 """)
 
-def main_menu_screen() -> None: # pylint: disable=missing-function-docstring
+
+def third_wrong() -> None:  # pylint: disable=missing-function-docstring
+    print("""
+_______
+   |  O
+   | \\|
+   |   
+   |   
+¯¯¯¯¯¯¯
+""")
+
+
+def fourth_wrong() -> None:  # pylint: disable=missing-function-docstring
+    print("""
+_______
+   |  O
+   | \\|/
+   |   
+   |   
+¯¯¯¯¯¯¯
+""")
+
+
+def fifth_wrong() -> None:  # pylint: disable=missing-function-docstring
+    print("""
+_______
+   |  O
+   | \\|/
+   |   \\
+   |   
+¯¯¯¯¯¯¯
+""")
+
+
+def final_wrong() -> None:  # pylint: disable=missing-function-docstring
+    print("""\033[91m
+_______
+   |  O
+   | \\|/
+   | / \\
+   |   
+¯¯¯¯¯¯¯\033[0m
+""")
+
+
+def main_menu_screen() -> None:  # pylint: disable=missing-function-docstring
     print("""\033[91m
  _   _                                         
 | | | |                                        
@@ -91,7 +104,8 @@ T)wo Player - In case you want to challenge a friend
 
 """)
 
-def one_player_screen() -> None: # pylint: disable=missing-function-docstring
+
+def one_player_screen() -> None:  # pylint: disable=missing-function-docstring
     print("""\033[91m
  _____             ______ _                       
 |  _  |            | ___ \ |                      
@@ -110,7 +124,8 @@ B)ack - Takes you back to the main menu.
 
 """)
 
-def two_player_screen() -> None: #pylint: disable=missing-function-docstring
+
+def two_player_screen() -> None:  # pylint: disable=missing-function-docstring
     print("""\033[91m
  _____              ______ _                       
 |_   _|             | ___ \ |                      
@@ -126,7 +141,21 @@ B)ack - Takes you back to the main menu.
 
 """)
 
-def game_over_screen() -> None: # pylint: disable=missing-function-docstring
+
+def you_win_screen() -> None:  # pylint: disable=missing-function-docstring
+    print("""\033[92m
+__   __            _    _ _         _ _ 
+\ \ / /           | |  | (_)       | | |
+ \ V /___  _   _  | |  | |_ _ __   | | |
+  \ // _ \| | | | | |/\| | | '_ \  | | |
+  | | (_) | |_| | \  /\  / | | | | |_|_|
+  \_/\___/ \__,_|  \/  \/|_|_| |_| (_|_)   \033[0m
+                                      
+                                      
+""")
+
+
+def game_over_screen() -> None:  # pylint: disable=missing-function-docstring
     print("""\033[91m
  _____                        _____                        __
 |  __ \                      |  _  |                  _   / /
