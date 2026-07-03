@@ -7,7 +7,7 @@ import sys
 import time
 from art import *  # pylint: disable=wildcard-import
 
-POSSIBLE_WORDS_1P: list = (
+POSSIBLE_WORDS_1P: dict = (
     [  # TODO: maybe change this to a dict to be able to give hints
         "hello",
         "goodbye",
@@ -19,6 +19,19 @@ POSSIBLE_WORDS_1P: list = (
         "video",
     ]
 )
+
+# POSSIBLE_WORDS_1P: dict = (
+#     {  # TODO: maybe change this to a dict to be able to give hints
+#         "hello":"A greeting",
+#         "goodbye": "A farewell",
+#         "pancake": "A breakfast item",
+#         "syrup": "A condiment that goes on top of a breakfast food",
+#         "eggs": "An animal makes this",
+#         "coffee": "Something that you drink in the morning",
+#         "hamster": "A pet that you may give to your child",
+#         "video": "Something that you watch"
+#     }
+# )
 
 AVAILABLE_LETTERS = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
@@ -265,11 +278,13 @@ Enjoy!!! 787482
                         AVAILABLE_LETTERS[i] = "_"
                         break
                 GUESSES += 1
-                if GUESSES < 6:
+                if 0 < GUESSES < 6:
                     print("That is not correct. Plase try again.")
                     time.sleep(1.5)
-                else:
+                elif GUESSES ==6:
                     print("Oops, you're all out of guesses.")
+                    time.sleep(1.5)
+                    break
                 continue
             elif GUESSES:
                 print("You have already guessed that letter. Please try again.")
