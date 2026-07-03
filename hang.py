@@ -334,7 +334,7 @@ if __name__ == "__main__":
 
 # TODO: need to make a copy of AVAILABLE_LETTERS that can be changed on when the player is playing
 # and if the user chooses to play again, the copy can be taken off of the stack and a new copy can
-# be made for the new game
+# be made for the new game, also need to work on giving the player hints 
 
 
 # TODO: CONTINUE WORKING ON THE PLAYER BEING ABLE TO RESTART THE GAME IF THEY CHOOSE TO PLAY AGAIN
