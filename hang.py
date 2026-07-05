@@ -119,27 +119,29 @@ def main() -> None:
                     while not ONE_PLAYER_SCREEN_DONE:
                         clear_terminal()
                         one_player_screen()
-                        print("Would you like to play Easy, Medium, or Hard?: ", end="")
-                        DIFFICULTY_CHOICE = input().lower()
+                        ANSWER = random.choice(POSSIBLE_WORDS_1P)
+                        # print("Would you like to play Easy, Medium, or Hard?: ", end="")
+                        DIFFICULTY_CHOICE = input("Would you like to play Easy, Medium, or Hard?: ").lower()
                         exit_check(DIFFICULTY_CHOICE)
-                        if DIFFICULTY_CHOICE == "b":
-                            break
-                        if DIFFICULTY_CHOICE in ("e", "easy"):
-                            ONE_PLAYER_GIVE_HINT = True
-                            ONE_PLAYER_SCREEN_DONE = True
-                            ONE_PLAYER = True
-                            MAIN_MENU_DONE = True
-                        elif DIFFICULTY_CHOICE in ("m", "medium"):
-                            ONE_PLAYER_OPTIONAL_HINT = True
-                            ONE_PLAYER_SCREEN_DONE = True
-                            ONE_PLAYER = True
-                            MAIN_MENU_DONE = True
-                        elif DIFFICULTY_CHOICE in ("h", "hard"):
-                            ONE_PLAYER_SCREEN_DONE = True
-                            ONE_PLAYER = True
-                            MAIN_MENU_DONE = True
-                        else:
-                            usage_message()
+                        match DIFFICULTY_CHOICE:
+                            case "b":
+                                break
+                            case "e" | "easy":
+                                ONE_PLAYER_GIVE_HINT = True
+                                ONE_PLAYER_SCREEN_DONE = True
+                                ONE_PLAYER = True
+                                MAIN_MENU_DONE = True
+                            case "m" | "medium":
+                                ONE_PLAYER_OPTIONAL_HINT = True
+                                ONE_PLAYER_SCREEN_DONE = True
+                                ONE_PLAYER = True
+                                MAIN_MENU_DONE = True
+                            case "h" | "hard":
+                                ONE_PLAYER_SCREEN_DONE = True
+                                ONE_PLAYER = True
+                                MAIN_MENU_DONE = True
+                            case _:
+                                usage_message()
                     if DIFFICULTY_CHOICE == "b":
                         DIFFICULTY_CHOICE = ""
                         continue
@@ -208,19 +210,17 @@ Enjoy!!! 787482
                 case "e" | "exit":
                     exit_message()
                     sys.exit()
+                case _:
+                    usage_message()
 
             if ONE_PLAYER_SCREEN_DONE or TWO_PLAYER_SCREEN_DONE:
                 MAIN_MENU_DONE = True
                 break
 
-            usage_message()
+            # usage_message()
         # ---------------------------------------END-OF-MAIN-MENU-----------------------------------
         # ------------------------------------------GAME-BEGINS-------------------------------------
         while MAIN_MENU_DONE and not GAME_OVER:
-            if ONE_PLAYER:
-                ANSWER = random.choice(POSSIBLE_WORDS_1P)
-                ONE_PLAYER = False
-
             if GUESSES == 0:
                 clear_terminal()
                 beginning()
@@ -286,7 +286,7 @@ Enjoy!!! 787482
                 if 0 < GUESSES < 6:
                     print("That is not correct. Plase try again.")
                     time.sleep(1.5)
-                elif GUESSES ==6:
+                elif GUESSES == 6:
                     print("Oops, you're all out of guesses.")
                     time.sleep(1.5)
                     break
