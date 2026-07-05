@@ -33,6 +33,14 @@ POSSIBLE_WORDS_1P: dict = (
 #     }
 # )
 
+# COPY_OF_WORDS = POSSIBLE_WORDS_1P.copy()
+# print(COPY_OF_WORDS)
+# theanswer = random.choice(list(COPY_OF_WORDS))
+# print("\n\n\n" + theanswer)
+# print(COPY_OF_WORDS[theanswer])
+
+# time.sleep(10)
+
 AVAILABLE_LETTERS = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
     "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -105,86 +113,84 @@ def main() -> None:
             user_answer: str = input().lower()
             exit_check(user_answer)
 
-            if user_answer in ("o", "one"):
-                print("Great! Let's get started!")
-                while not ONE_PLAYER_SCREEN_DONE:
-                    clear_terminal()
-                    one_player_screen()
-                    print("Would you like to play Easy, Medium, or Hard?: ", end="")
-                    DIFFICULTY_CHOICE = input().lower()
-                    exit_check(DIFFICULTY_CHOICE)
+            match user_answer:
+                case "o" | "one":
+                    print("Great! Let's get started!")
+                    while not ONE_PLAYER_SCREEN_DONE:
+                        clear_terminal()
+                        one_player_screen()
+                        print("Would you like to play Easy, Medium, or Hard?: ", end="")
+                        DIFFICULTY_CHOICE = input().lower()
+                        exit_check(DIFFICULTY_CHOICE)
+                        if DIFFICULTY_CHOICE == "b":
+                            break
+                        if DIFFICULTY_CHOICE in ("e", "easy"):
+                            ONE_PLAYER_GIVE_HINT = True
+                            ONE_PLAYER_SCREEN_DONE = True
+                            ONE_PLAYER = True
+                            MAIN_MENU_DONE = True
+                        elif DIFFICULTY_CHOICE in ("m", "medium"):
+                            ONE_PLAYER_OPTIONAL_HINT = True
+                            ONE_PLAYER_SCREEN_DONE = True
+                            ONE_PLAYER = True
+                            MAIN_MENU_DONE = True
+                        elif DIFFICULTY_CHOICE in ("h", "hard"):
+                            ONE_PLAYER_SCREEN_DONE = True
+                            ONE_PLAYER = True
+                            MAIN_MENU_DONE = True
+                        else:
+                            usage_message()
                     if DIFFICULTY_CHOICE == "b":
+                        DIFFICULTY_CHOICE = ""
+                        continue
+                    if ONE_PLAYER_SCREEN_DONE:
                         break
-                    if DIFFICULTY_CHOICE in ("e", "easy"):
-                        ONE_PLAYER_GIVE_HINT = True
-                        ONE_PLAYER_SCREEN_DONE = True
-                        ONE_PLAYER = True
-                        MAIN_MENU_DONE = True
-                    elif DIFFICULTY_CHOICE in ("m", "medium"):
-                        ONE_PLAYER_OPTIONAL_HINT = True
-                        ONE_PLAYER_SCREEN_DONE = True
-                        ONE_PLAYER = True
-                        MAIN_MENU_DONE = True
-                    elif DIFFICULTY_CHOICE in ("h", "hard"):
-                        ONE_PLAYER_SCREEN_DONE = True
-                        ONE_PLAYER = True
-                        MAIN_MENU_DONE = True
-                    else:
+                case "t" | "two":
+                    while not TWO_PLAYER_SCREEN_DONE:
+                        clear_terminal()
+                        two_player_screen()
+                        print(
+                            "Would you like to give the player a hint ( y)es or n)o )?: ",
+                            end="",
+                        )
+                        user_answer = input().lower()
+                        exit_check(user_answer)
+                        if user_answer == "b":
+                            break
+                        if user_answer in ("y", "yes"):
+                            ANSWER = input(
+                                "Please enter the word you want the user to guess: "
+                            ).lower()
+                            if ANSWER == "b":
+                                break
+                            PLAYER_HINT = input("Please put in the hint: ").lower()
+                            if PLAYER_HINT == "b":
+                                break
+                            TWO_PLAYER = True
+                            TWO_PLAYER_SCREEN_DONE = True
+                            MAIN_MENU_DONE = True
+                            break
+                        if user_answer in ("n", "no"):
+                            ANSWER = input(
+                                "Please enter the word you want the user to guess: "
+                            ).lower()
+                            TWO_PLAYER = True
+                            TWO_PLAYER_SCREEN_DONE = True
+                            MAIN_MENU_DONE = True
+                            break
+                        if user_answer == "b" or ANSWER == "b" or PLAYER_HINT == "b":
+                            break
                         usage_message()
-
-                if DIFFICULTY_CHOICE == "b":
-                    DIFFICULTY_CHOICE = ""
-                    continue
-                if ONE_PLAYER_SCREEN_DONE:
-                    break
-
-            if user_answer in ("t", "two"):
-                while not TWO_PLAYER_SCREEN_DONE:
-                    clear_terminal()
-                    two_player_screen()
-                    print(
-                        "Would you like to give the player a hint ( y)es or n)o )?: ",
-                        end="",
-                    )
-                    user_answer = input().lower()
-                    exit_check(user_answer)
-                    if user_answer == "b":
-                        break
-                    if user_answer in ("y", "yes"):
-                        ANSWER = input(
-                            "Please enter the word you want the user to guess: "
-                        ).lower()
-                        if ANSWER == "b":
-                            break
-                        PLAYER_HINT = input("Please put in the hint: ").lower()
-                        if PLAYER_HINT == "b":
-                            break
-                        TWO_PLAYER = True
-                        TWO_PLAYER_SCREEN_DONE = True
-                        MAIN_MENU_DONE = True
-                        break
-                    if user_answer in ("n", "no"):
-                        ANSWER = input(
-                            "Please enter the word you want the user to guess: "
-                        ).lower()
-                        TWO_PLAYER = True
-                        TWO_PLAYER_SCREEN_DONE = True
-                        MAIN_MENU_DONE = True
-                        break
                     if user_answer == "b" or ANSWER == "b" or PLAYER_HINT == "b":
+                        user_answer = ""
+                        ANSWER = ""
+                        PLAYER_HINT = ""
+                        continue
+                    if TWO_PLAYER_SCREEN_DONE:
                         break
-                    usage_message()
-                if user_answer == "b" or ANSWER == "b" or PLAYER_HINT == "b":
-                    user_answer = ""
-                    ANSWER = ""
-                    PLAYER_HINT = ""
-                    continue
-                if TWO_PLAYER_SCREEN_DONE:
-                    break
-
-            if user_answer in ("h", "help"):
-                clear_terminal()
-                print("""
+                case "h" | "help":
+                    clear_terminal()
+                    print("""
 At any given time, you can type Exit or exit to quit the program.
 At the Main Menu however you can just type Exit/exit/E/e to quit the program.
 If you choose just one player, you can choose between Easy, Medium, or Hard.
@@ -196,13 +202,12 @@ for you as well as if they want to give you a hint or even no hint at all >:D.
 Press enter to go back to the Main Menu.
 
 Enjoy!!! 787482
-                """)
-                input()
-                continue
-
-            if user_answer in ("e", "exit"):
-                exit_message()
-                sys.exit()
+                    """)
+                    input()
+                    continue
+                case "e" | "exit":
+                    exit_message()
+                    sys.exit()
 
             if ONE_PLAYER_SCREEN_DONE or TWO_PLAYER_SCREEN_DONE:
                 MAIN_MENU_DONE = True
@@ -307,7 +312,8 @@ Enjoy!!! 787482
                 if TWO_PLAYER:
                     TWO_PLAYER_SCREEN_DONE = False
                     TWO_PLAYER = False
-                    PLAYER_HINT = ""
+                   
+                PLAYER_HINT = ""
                 MAIN_MENU_DONE = False
                 ANSWER = ""
                 GAME_BEGINS = False

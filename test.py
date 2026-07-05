@@ -4,15 +4,7 @@ from hang import UNDERSCORE_WORD, GAME_BEGINS
 
 subprocess.call(["cls"],shell=True)
 
-main_menu_screen()
-one_player_screen()
-two_player_screen()
-game_over_screen()
-beginning()
-first_wrong()
-final_wrong()
-second_wrong()
-third_wrong()
-fourth_wrong()
-fifth_wrong()
-you_win_screen()
+x = 6
+match x:
+    case 6:
+        print("six")
