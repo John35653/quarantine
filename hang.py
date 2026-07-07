@@ -121,7 +121,9 @@ def main() -> None:
                         one_player_screen()
                         ANSWER = random.choice(POSSIBLE_WORDS_1P)
                         # print("Would you like to play Easy, Medium, or Hard?: ", end="")
-                        DIFFICULTY_CHOICE = input("Would you like to play Easy, Medium, or Hard?: ").lower()
+                        DIFFICULTY_CHOICE = input(
+                            "Would you like to play Easy, Medium, or Hard?: "
+                        ).lower()
                         exit_check(DIFFICULTY_CHOICE)
                         match DIFFICULTY_CHOICE:
                             case "b":
@@ -151,38 +153,38 @@ def main() -> None:
                     while not TWO_PLAYER_SCREEN_DONE:
                         clear_terminal()
                         two_player_screen()
-                        print(
-                            "Would you like to give the player a hint ( y)es or n)o )?: ",
-                            end="",
-                        )
-                        user_answer = input().lower()
+                        user_answer = input(
+                            "Would you like to give the player a hint ( y)es or n)o )?: "
+                        ).lower()
                         exit_check(user_answer)
-                        if user_answer == "b":
-                            break
-                        if user_answer in ("y", "yes"):
-                            ANSWER = input(
-                                "Please enter the word you want the user to guess: "
-                            ).lower()
-                            if ANSWER == "b":
+                        match user_answer:
+                            case "b":
                                 break
-                            PLAYER_HINT = input("Please put in the hint: ").lower()
-                            if PLAYER_HINT == "b":
+                            case "y" | "yes":
+                                ANSWER = input(
+                                    "Please enter the word you want the user to guess: "
+                                ).lower()
+                                if ANSWER == "b":
+                                    break
+                                PLAYER_HINT = input("Please put in the hint: ").lower()
+                                if PLAYER_HINT == "b":
+                                    break
+                                TWO_PLAYER = True
+                                TWO_PLAYER_SCREEN_DONE = True
+                                MAIN_MENU_DONE = True
                                 break
-                            TWO_PLAYER = True
-                            TWO_PLAYER_SCREEN_DONE = True
-                            MAIN_MENU_DONE = True
-                            break
-                        if user_answer in ("n", "no"):
-                            ANSWER = input(
-                                "Please enter the word you want the user to guess: "
-                            ).lower()
-                            TWO_PLAYER = True
-                            TWO_PLAYER_SCREEN_DONE = True
-                            MAIN_MENU_DONE = True
-                            break
+                            case "n" | "no":
+                                ANSWER = input(
+                                    "Please enter the word you want the user to guess: "
+                                ).lower()
+                                TWO_PLAYER = True
+                                TWO_PLAYER_SCREEN_DONE = True
+                                MAIN_MENU_DONE = True
+                                break
+                            case _:
+                                usage_message()
                         if user_answer == "b" or ANSWER == "b" or PLAYER_HINT == "b":
                             break
-                        usage_message()
                     if user_answer == "b" or ANSWER == "b" or PLAYER_HINT == "b":
                         user_answer = ""
                         ANSWER = ""
@@ -259,12 +261,19 @@ Enjoy!!! 787482
             guessed_char = input(
                 "\nPlease enter your choice from Available Letters: "
             ).lower()
+            exit_check(guessed_char)
             if len(guessed_char) > 1:
-                exit_check(guessed_char)
-                # print("Please choose a letter from Available Letters")
                 usage_message()
                 continue
-            if (guessed_char in AVAILABLE_LETTERS) and (guessed_char in ANSWER):
+            if guessed_char not in AVAILABLE_LETTERS:
+                print("You have already guessed that letter. Please try again.")
+                time.sleep(1.5)
+                continue
+            for char,i in enumerate(AVAILABLE_LETTERS):
+                if guessed_char == char:
+                    AVAILABLE_LETTERS[i] = "_"
+                    break
+            if guessed_char in ANSWER:
                 new_word = ""
                 for i, char in enumerate(ANSWER):
                     if guessed_char == char:
@@ -277,7 +286,7 @@ Enjoy!!! 787482
                     GAME_WIN = True
                     break
                 continue
-            elif (guessed_char in AVAILABLE_LETTERS) and (guessed_char not in ANSWER):
+            elif (guessed_char not in ANSWER):
                 for i, char in enumerate(AVAILABLE_LETTERS):
                     if guessed_char == char:
                         AVAILABLE_LETTERS[i] = "_"
@@ -292,9 +301,8 @@ Enjoy!!! 787482
                     break
                 continue
             elif GUESSES:
-                print("You have already guessed that letter. Please try again.")
-                time.sleep(1.5)
-                continue
+                pass
+                
 
         while GAME_OVER or GAME_WIN:
             # TODO: placeholder for asking if the player would like to play again, this is not working right now
@@ -302,31 +310,30 @@ Enjoy!!! 787482
             exit_check(user_answer)
             # TODO: reset flags and variables to their previous state if the user wants to play again, use
             # ONE_PLAYER and TWO_PLAYER flags
-            if user_answer in ("y", "yes"):
-                if ONE_PLAYER:
-                    ONE_PLAYER_SCREEN_DONE = False
-                    ONE_PLAYER = False
-                    ONE_PLAYER_GIVE_HINT = False
-                    ONE_PLAYER_OPTIONAL_HINT = False
-                    DIFFICULTY_CHOICE = ""
-                if TWO_PLAYER:
-                    TWO_PLAYER_SCREEN_DONE = False
-                    TWO_PLAYER = False
-                   
-                PLAYER_HINT = ""
-                MAIN_MENU_DONE = False
-                ANSWER = ""
-                GAME_BEGINS = False
-                UNDERSCORE_WORD = ""
-                GUESSES = 0
-                GAME_WIN = False
-                GAME_OVER = False
-            elif user_answer in ("n", "no"):
-                print("Thank you for playing, have a wonderful day!")
-                sys.exit()
-            else:
-                usage_message()
-        # sys.exit()
+            match user_answer:
+                case "y" | "yes":
+                    if ONE_PLAYER:
+                        ONE_PLAYER_SCREEN_DONE = False
+                        ONE_PLAYER = False
+                        ONE_PLAYER_GIVE_HINT = False
+                        ONE_PLAYER_OPTIONAL_HINT = False
+                        DIFFICULTY_CHOICE = ""
+                    if TWO_PLAYER:
+                        TWO_PLAYER_SCREEN_DONE = False
+                        TWO_PLAYER = False
+                    PLAYER_HINT = ""
+                    MAIN_MENU_DONE = False
+                    ANSWER = ""
+                    GAME_BEGINS = False
+                    UNDERSCORE_WORD = ""
+                    GUESSES = 0
+                    GAME_WIN = False
+                    GAME_OVER = False
+                case "n" | "no":
+                    print("Thank you for playing, have a wonderful day!")
+                    sys.exit()
+                case _:
+                    usage_message()
 
 
 if __name__ == "__main__":
@@ -340,7 +347,7 @@ if __name__ == "__main__":
 
 # TODO: need to make a copy of AVAILABLE_LETTERS that can be changed on when the player is playing
 # and if the user chooses to play again, the copy can be taken off of the stack and a new copy can
-# be made for the new game, also need to work on giving the player hints 
+# be made for the new game, also need to work on giving the player hints
 
 
 # TODO: CONTINUE WORKING ON THE PLAYER BEING ABLE TO RESTART THE GAME IF THEY CHOOSE TO PLAY AGAIN
