@@ -41,10 +41,12 @@ POSSIBLE_WORDS_1P: dict = (
 
 # time.sleep(10)
 
-AVAILABLE_LETTERS = [
+BASE_LETTERS = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
     "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 ]
+
+AVAILABLE_LETTERS = BASE_LETTERS.copy()
 
 MAIN_MENU_DONE: bool = False
 ANSWER: str = ""
@@ -100,6 +102,7 @@ def main() -> None:
     global ONE_PLAYER_SCREEN_DONE, TWO_PLAYER_SCREEN_DONE, ONE_PLAYER, ONE_PLAYER_GIVE_HINT
     global TWO_PLAYER, GUESSES, MAIN_MENU_DONE, DIFFICULTY_CHOICE, UNDERSCORE_WORD
     global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER, GAME_WIN
+    global AVAILABLE_LETTERS
 
     # ---------------------------------------PSEUDO-MAIN-MENU---------------------------------------
 
@@ -256,8 +259,12 @@ Enjoy!!! 787482
             print("\nAvailable Letters:")
             for letter in AVAILABLE_LETTERS:
                 print(letter.upper(), end=" ")
+            
+            
+            
             print(ANSWER)  # TODO: remove before finishing
 
+                            #get char from the user
             guessed_char = input(
                 "\nPlease enter your choice from Available Letters: "
             ).lower()
@@ -265,14 +272,21 @@ Enjoy!!! 787482
             if len(guessed_char) > 1:
                 usage_message()
                 continue
+            
+                        # checking to see if the char is available
             if guessed_char not in AVAILABLE_LETTERS:
                 print("You have already guessed that letter. Please try again.")
                 time.sleep(1.5)
                 continue
-            for char,i in enumerate(AVAILABLE_LETTERS):
+            
+            
+                        # removing the char from the available letters
+            for i, char in enumerate(AVAILABLE_LETTERS):
                 if guessed_char == char:
                     AVAILABLE_LETTERS[i] = "_"
                     break
+            
+            
             if guessed_char in ANSWER:
                 new_word = ""
                 for i, char in enumerate(ANSWER):
@@ -286,11 +300,10 @@ Enjoy!!! 787482
                     GAME_WIN = True
                     break
                 continue
-            elif (guessed_char not in ANSWER):
-                for i, char in enumerate(AVAILABLE_LETTERS):
-                    if guessed_char == char:
-                        AVAILABLE_LETTERS[i] = "_"
-                        break
+            
+            
+            
+            elif guessed_char not in ANSWER:
                 GUESSES += 1
                 if 0 < GUESSES < 6:
                     print("That is not correct. Plase try again.")
@@ -329,6 +342,7 @@ Enjoy!!! 787482
                     GUESSES = 0
                     GAME_WIN = False
                     GAME_OVER = False
+                    AVAILABLE_LETTERS = BASE_LETTERS.copy()
                 case "n" | "no":
                     print("Thank you for playing, have a wonderful day!")
                     sys.exit()
