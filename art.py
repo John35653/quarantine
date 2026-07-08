@@ -104,9 +104,39 @@ T)wo Player - In case you want to challenge a friend
 
 """)
 
+def help_screen_menu() -> None: # pylint: disable=missing-function-docstring
+    print("""
+ _   _      _        
+| | | |    | |       
+| |_| | ___| |_ __   
+|  _  |/ _ \ | '_ \  
+| | | |  __/ | |_) | 
+\_| |_/\___|_| .__/  
+             | |     
+             |_|     
+
+
+At any given time, you can type \033[1;93mExit\033[0m or \033[1;93mexit\033[0m to quit the program.
+At the Main Menu however you can just type \033[1;93mExit/exit/E/e\033[0m to quit the program.
+In fact, for a majority of menu options you can also just spell out the whole word. Ex: O)ne can 
+be selected by either typing 'o' or "one", T)wo being either 't' or "two", etc.
+If you choose just one player, you can choose between \033[1;93mEasy, Medium, or Hard\033[0m.
+
+-\033[92mEasy\033[0m will give you a \033[95mhint\033[0m that you can see at all times.
+-\033[93mMedium\033[0m will allow you to see the \033[95mhint\033[0m once you type \033[1;95mHint\033[0m or \033[1;95mhint\033[0m during the game. 
+-\033[91mHard\033[0m provides no \033[95mhint\033[0m at all. 
+
+If you choose the two player option, a person can both choose the word 
+for you as well as if they want to give you a hint or even no hint at all >:D. 
+
+Enjoy!!! 787482
+
+Press enter to go back to the Main Menu.
+""")
+
 
 def one_player_screen() -> None:  # pylint: disable=missing-function-docstring
-    print("""\033[91m
+    print("""\033[1;91m
  _____             ______ _                       
 |  _  |            | ___ \ |                      
 | | | |_ __   ___  | |_/ / | __ _ _   _  ___ _ __ 
@@ -126,7 +156,7 @@ B)ack - Takes you back to the main menu.
 
 
 def two_player_screen() -> None:  # pylint: disable=missing-function-docstring
-    print("""\033[91m
+    print("""\033[1;91m
  _____              ______ _                       
 |_   _|             | ___ \ |                      
   | |_      _____   | |_/ / | __ _ _   _  ___ _ __ 
@@ -143,7 +173,7 @@ B)ack - Takes you back to the main menu.
 
 
 def you_win_screen() -> None:  # pylint: disable=missing-function-docstring
-    print("""\033[92m
+    print("""\033[1;92m
 __   __            _    _ _         _ _ 
 \ \ / /           | |  | (_)       | | |
  \ V /___  _   _  | |  | |_ _ __   | | |
@@ -156,7 +186,7 @@ __   __            _    _ _         _ _
 
 
 def game_over_screen() -> None:  # pylint: disable=missing-function-docstring
-    print("""\033[91m
+    print("""\033[1;91m
  _____                        _____                        __
 |  __ \                      |  _  |                  _   / /
 | |  \/ __ _ _ __ ___   ___  | | | |_   _____ _ __   (_) | | 

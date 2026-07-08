@@ -197,19 +197,7 @@ def main() -> None:
                 case "h" | "help":
                     clear_terminal()
                     # TODO make a help screen, just for funsies
-                    print("""
-At any given time, you can type Exit or exit to quit the program.
-At the Main Menu however you can just type Exit/exit/E/e to quit the program.
-If you choose just one player, you can choose between Easy, Medium, or Hard.
-Easy will give you a hint that you can see at all times, Medium will allow
-you to see the hint once you type Hint or hint during the game. Hard provides no hint 
-at all. If you choose the two player option, a person can both choose the word 
-for you as well as if they want to give you a hint or even no hint at all >:D. 
-
-Press enter to go back to the Main Menu.
-
-Enjoy!!! 787482
-                    """)
+                    help_screen_menu()
                     input()
                     continue
                 case "e" | "exit":
