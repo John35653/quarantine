@@ -243,7 +243,10 @@ def main() -> None:
             if not GAME_BEGINS:
                 UNDERSCORE_WORD = "_" * len(ANSWER)
                 GAME_BEGINS = True
-            print(UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES))
+            if ONE_PLAYER_GIVE_HINT:
+                print("Word: " + UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES) + "    hint: " + PLAYER_HINT)
+            else:
+                print("Word: " + UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES))
             print("\nAvailable Letters:")
             for letter in AVAILABLE_LETTERS:
                 print(letter.upper(), end=" ")
@@ -257,8 +260,18 @@ def main() -> None:
                 "\nPlease enter your choice from Available Letters: "
             ).lower()
             exit_check(guessed_char)
+            
+            # checking if the user wants a hint or to quit the program
             if len(guessed_char) > 1:
-                usage_message()
+                if guessed_char == "hint" and DIFFICULTY_CHOICE != "h":
+                    if ONE_PLAYER_OPTIONAL_HINT:
+                        ONE_PLAYER_GIVE_HINT = True
+                    # time.sleep(1.5)
+                elif DIFFICULTY_CHOICE == "h":
+                    print("You are on hard and can not receive hints.")
+                    time.sleep(1.5)
+                else:
+                    usage_message()
                 continue
 
                         # checking to see if the char is available
@@ -306,7 +319,7 @@ def main() -> None:
 
 
         while GAME_OVER or GAME_WIN:
-            # TODO: placeholder for asking if the player would like to play again, this is not working right now
+            # TODO: placeholder for asking if the player would like to play again
             user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
             exit_check(user_answer)
             # TODO: reset flags and variables to their previous state if the user wants to play again, use
