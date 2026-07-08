@@ -104,7 +104,7 @@ def main() -> None:
     global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER, GAME_WIN
     global AVAILABLE_LETTERS
 
-    # ---------------------------------------PSEUDO-MAIN-MENU---------------------------------------
+    # ----------------------------------------MAIN-MENU---------------------------------------------
 
     while True:
 
@@ -123,7 +123,6 @@ def main() -> None:
                         clear_terminal()
                         one_player_screen()
                         ANSWER = random.choice(POSSIBLE_WORDS_1P)
-                        # print("Would you like to play Easy, Medium, or Hard?: ", end="")
                         DIFFICULTY_CHOICE = input(
                             "Would you like to play Easy, Medium, or Hard?: "
                         ).lower()
@@ -197,6 +196,7 @@ def main() -> None:
                         break
                 case "h" | "help":
                     clear_terminal()
+                    # TODO make a help screen, just for funsies
                     print("""
 At any given time, you can type Exit or exit to quit the program.
 At the Main Menu however you can just type Exit/exit/E/e to quit the program.
@@ -259,9 +259,9 @@ Enjoy!!! 787482
             print("\nAvailable Letters:")
             for letter in AVAILABLE_LETTERS:
                 print(letter.upper(), end=" ")
-            
-            
-            
+
+
+
             print(ANSWER)  # TODO: remove before finishing
 
                             #get char from the user
@@ -272,21 +272,21 @@ Enjoy!!! 787482
             if len(guessed_char) > 1:
                 usage_message()
                 continue
-            
+
                         # checking to see if the char is available
             if guessed_char not in AVAILABLE_LETTERS:
                 print("You have already guessed that letter. Please try again.")
                 time.sleep(1.5)
                 continue
-            
-            
+
+
                         # removing the char from the available letters
             for i, char in enumerate(AVAILABLE_LETTERS):
                 if guessed_char == char:
                     AVAILABLE_LETTERS[i] = "_"
                     break
-            
-            
+
+
             if guessed_char in ANSWER:
                 new_word = ""
                 for i, char in enumerate(ANSWER):
@@ -300,9 +300,9 @@ Enjoy!!! 787482
                     GAME_WIN = True
                     break
                 continue
-            
-            
-            
+
+
+
             elif guessed_char not in ANSWER:
                 GUESSES += 1
                 if 0 < GUESSES < 6:
@@ -315,7 +315,7 @@ Enjoy!!! 787482
                 continue
             elif GUESSES:
                 pass
-                
+
 
         while GAME_OVER or GAME_WIN:
             # TODO: placeholder for asking if the player would like to play again, this is not working right now
