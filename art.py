@@ -105,7 +105,7 @@ T)wo Player - In case you want to challenge a friend
 """)
 
 def help_screen_menu() -> None: # pylint: disable=missing-function-docstring
-    print("""
+    print("""\033[1;93m
  _   _      _        
 | | | |    | |       
 | |_| | ___| |_ __   
@@ -113,7 +113,7 @@ def help_screen_menu() -> None: # pylint: disable=missing-function-docstring
 | | | |  __/ | |_) | 
 \_| |_/\___|_| .__/  
              | |     
-             |_|     
+             |_|     \033[0m
 
 
 At any given time, you can type \033[1;93mExit\033[0m or \033[1;93mexit\033[0m to quit the program.

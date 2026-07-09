@@ -123,6 +123,7 @@ def main() -> None:
                         clear_terminal()
                         one_player_screen()
                         ANSWER = random.choice(list(POSSIBLE_WORDS_1P))
+                        PLAYER_HINT = POSSIBLE_WORDS_1P[ANSWER]
                         DIFFICULTY_CHOICE = input(
                             "Would you like to play Easy, Medium, or Hard?: "
                         ).lower()
