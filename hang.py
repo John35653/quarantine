@@ -1,53 +1,67 @@
 """This is where the magic happens for the hangman game which I'm using to learn some Python"""
 
+# SORRY FOR THE LACK OF OR OVER-COMMENTING, THIS WAS MORE FOR ME THAN SOMEONE ELSE. I JUST NEEDED
+# SOME NOTES WHILE I LEARNED PYTHON.
+# HOPEFULLY YOU ENJOY THE GAME !! (IF YOU EVEN SEE THIS LOL)
+
 import random
 import os
 import subprocess
 import sys
 import time
-from art import *  # pylint: disable=wildcard-import
-
-# POSSIBLE_WORDS_1P: dict = (
-#     [  # TODO: maybe change this to a dict to be able to give hints
-#         "hello",
-#         "goodbye",
-#         "pancake",
-#         "syrup",
-#         "eggs",
-#         "coffee",
-#         "hamster",
-#         "video",
-#     ]
-# )
-
-POSSIBLE_WORDS_1P: dict = (
-    {  # TODO: maybe change this to a dict to be able to give hints
-        "hello":"A greeting",
-        "goodbye": "A farewell",
-        "pancake": "A breakfast item",
-        "syrup": "A condiment that goes on top of a breakfast food",
-        "eggs": "An animal makes this",
-        "coffee": "Something that you drink in the morning",
-        "hamster": "A pet that you may give to your child",
-        "video": "Something that you watch"
-    }
+from art import (
+    beginning,
+    first_wrong,
+    second_wrong,
+    third_wrong,
+    fourth_wrong,
+    fifth_wrong,
 )
+from art import final_wrong, main_menu_screen, help_screen_menu, one_player_screen
+from art import two_player_screen, you_win_screen, game_over_screen
 
-# COPY_OF_WORDS = POSSIBLE_WORDS_1P.copy()
-# print(COPY_OF_WORDS)
-# theanswer = random.choice(list(COPY_OF_WORDS))
-# print("\n\n\n" + theanswer)
-# print(COPY_OF_WORDS[theanswer])
+# if you would like to add more words, in python, to add something to a dictionary you would do:
+# "word": "hint for the word",  <- make sure to also put the comma for more words that you would
+# like to add later
 
-# time.sleep(10)
+POSSIBLE_WORDS_1P: dict = {
+    "hello": "A greeting",
+    "goodbye": "A farewell",
+    "pancake": "A breakfast item",
+    "syrup": "A condiment that goes on top of a breakfast food",
+    "eggs": "An animal makes this",
+    "coffee": "Something that you drink in the morning",
+    "hamster": "A pet that you may give to your child",
+    "video": "Something that you watch",
+    "jazz": "Known as the ____ age, popular exploding in the 1920s",
+    "quiz": "Something that you take in school",
+    "pizza": "Some say this food tastes better cold in the morning",
+    "jacket": "You wear this when it is cold outside",
+    "shadow": "Everyone has one, and you see it when it is sunny out",
+    "zombie": "Commonly referred to as the walking dead",
+    "subway": "Both a sandwich shop and a way to get around places",
+    "flamingo": "A pink bird that likes to stand on one leg",
+    "backpack": "Something that students wear to school to hold their books",
+    "camping": "Something that people do on the weekends, mmm s'mores",
+    "fishing": "Something that kids would do with their dad or grandpa",
+    "marshmallow": "This sugary food item tastes good roasted",
+}
 
 BASE_LETTERS = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
     "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 ]
 
-AVAILABLE_LETTERS = BASE_LETTERS.copy()
 
+# BASE_LETTERS = [
+#    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+#    "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+#    ]
+#
+# this is for when black formatting makes the list super long height wise, just copy and paste this
+# instead of manually fixing
+
+AVAILABLE_LETTERS = BASE_LETTERS.copy()
 MAIN_MENU_DONE: bool = False
 ANSWER: str = ""
 ONE_PLAYER_SCREEN_DONE: bool = False
@@ -210,7 +224,6 @@ def main() -> None:
                 MAIN_MENU_DONE = True
                 break
 
-            # usage_message()
         # ---------------------------------------END-OF-MAIN-MENU-----------------------------------
         # ------------------------------------------GAME-BEGINS-------------------------------------
         while MAIN_MENU_DONE and not GAME_OVER:
@@ -239,29 +252,37 @@ def main() -> None:
                 GAME_OVER = True
                 break
 
-            # PRINTING THE HIDDEN WORD AND THE AVAILABLE LETTERS LEFT TO USE
+            # PRINTING THE UNDERSCORE WORD AND THE AVAILABLE LETTERS LEFT TO USE
             if not GAME_BEGINS:
                 UNDERSCORE_WORD = "_" * len(ANSWER)
                 GAME_BEGINS = True
             if ONE_PLAYER_GIVE_HINT:
-                print("Word: " + UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES) + "    hint: " + PLAYER_HINT)
+                print(
+                    "Word: "
+                    + UNDERSCORE_WORD
+                    + "     Guesses left: "
+                    + str(6 - GUESSES)
+                    + "    hint: "
+                    + PLAYER_HINT
+                )
             else:
-                print("Word: " + UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES))
+                print(
+                    "Word: "
+                    + UNDERSCORE_WORD
+                    + "     Guesses left: "
+                    + str(6 - GUESSES)
+                )
             print("\nAvailable Letters:")
             for letter in AVAILABLE_LETTERS:
                 print(letter.upper(), end=" ")
 
-
-
-            print(ANSWER)  # TODO: remove before finishing
-
-                            #get char from the user
+            # GET CHAR FROM THE USER
             guessed_char = input(
                 "\nPlease enter your choice from Available Letters: "
             ).lower()
             exit_check(guessed_char)
 
-            # checking if the user wants a hint or to quit the program
+            # CHECKING IF THE USER WANTS A HINT OR TO QUIT THE GAME
             if len(guessed_char) > 1:
                 if guessed_char == "hint" and DIFFICULTY_CHOICE != "h":
                     if ONE_PLAYER_OPTIONAL_HINT:
@@ -274,20 +295,19 @@ def main() -> None:
                     usage_message()
                 continue
 
-                        # checking to see if the char is available
+                # CHECKING TO SEE IF THE CHAR IS AVAILABLE
             if guessed_char not in AVAILABLE_LETTERS:
                 print("You have already guessed that letter. Please try again.")
                 time.sleep(1.5)
                 continue
 
-
-                        # removing the char from the available letters
+                # REMOVING THE CHAR FROM AVAILABLE_LETTERS
             for i, char in enumerate(AVAILABLE_LETTERS):
                 if guessed_char == char:
                     AVAILABLE_LETTERS[i] = "_"
                     break
 
-
+                # CHECKING TO SEE IF THE GUESSED CHAR IS CORRECT OR NOT
             if guessed_char in ANSWER:
                 new_word = ""
                 for i, char in enumerate(ANSWER):
@@ -302,8 +322,8 @@ def main() -> None:
                     break
                 continue
 
-
-
+                # IF THE LETTER IS WRONG, TELL THE USER IT'S WRONG, RAISE THE GUESS COUNT,
+                # AND LET THE USER TRY AGAIN
             elif guessed_char not in ANSWER:
                 GUESSES += 1
                 if 0 < GUESSES < 6:
@@ -315,16 +335,16 @@ def main() -> None:
                     break
                 continue
 
-
-
+        # -----------------------------GAME-LOOP-ENDS-----------------------------------------------
+        # SEEING IF THE USER WOULD LIKE TO PLAY AGAIN
         while GAME_OVER or GAME_WIN:
             user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
             exit_check(user_answer)
 
-            # reset flags and variables to their previous state if the user wants to play again,
-            # use ONE_PLAYER and TWO_PLAYER flags. separating this to reduce actions
+            # RESET FLAGS AND VARIABLES TO THEIR BEGINNING STATE IF THE USER WANTS TO PLAY AGAIN,
+            # USE ONE_PLAYER AND TWO_PLAYER FLAGS. SEPARATING THIS TO REDUCE ACTIONS
             match user_answer:
-                case "y" | "yes":
+                case "y" | "yes":  # IF YES, RESTART THE LOOP
                     if ONE_PLAYER:
                         ONE_PLAYER_SCREEN_DONE = False
                         ONE_PLAYER = False
@@ -343,7 +363,7 @@ def main() -> None:
                     GAME_WIN = False
                     GAME_OVER = False
                     AVAILABLE_LETTERS = BASE_LETTERS.copy()
-                case "n" | "no":
+                case "n" | "no":  # IF NO, SAY GOOBYE AND QUIT THE GAME NICELY
                     print("Thank you for playing, have a wonderful day!")
                     sys.exit()
                 case _:
@@ -352,11 +372,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-    # TODO: remove before finishing
-    # AVAILABLE_LETTERS = [
-    #     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-    #     "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
-    #     ]     this is for when black makes the list super long height wise, just copy and paste this instead of manually fixing
-
-# TODO: need to work on giving the player hints
