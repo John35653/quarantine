@@ -7,31 +7,31 @@ import sys
 import time
 from art import *  # pylint: disable=wildcard-import
 
-POSSIBLE_WORDS_1P: dict = (
-    [  # TODO: maybe change this to a dict to be able to give hints
-        "hello",
-        "goodbye",
-        "pancake",
-        "syrup",
-        "eggs",
-        "coffee",
-        "hamster",
-        "video",
-    ]
-)
-
 # POSSIBLE_WORDS_1P: dict = (
-#     {  # TODO: maybe change this to a dict to be able to give hints
-#         "hello":"A greeting",
-#         "goodbye": "A farewell",
-#         "pancake": "A breakfast item",
-#         "syrup": "A condiment that goes on top of a breakfast food",
-#         "eggs": "An animal makes this",
-#         "coffee": "Something that you drink in the morning",
-#         "hamster": "A pet that you may give to your child",
-#         "video": "Something that you watch"
-#     }
+#     [  # TODO: maybe change this to a dict to be able to give hints
+#         "hello",
+#         "goodbye",
+#         "pancake",
+#         "syrup",
+#         "eggs",
+#         "coffee",
+#         "hamster",
+#         "video",
+#     ]
 # )
+
+POSSIBLE_WORDS_1P: dict = (
+    {  # TODO: maybe change this to a dict to be able to give hints
+        "hello":"A greeting",
+        "goodbye": "A farewell",
+        "pancake": "A breakfast item",
+        "syrup": "A condiment that goes on top of a breakfast food",
+        "eggs": "An animal makes this",
+        "coffee": "Something that you drink in the morning",
+        "hamster": "A pet that you may give to your child",
+        "video": "Something that you watch"
+    }
+)
 
 # COPY_OF_WORDS = POSSIBLE_WORDS_1P.copy()
 # print(COPY_OF_WORDS)
@@ -122,7 +122,7 @@ def main() -> None:
                     while not ONE_PLAYER_SCREEN_DONE:
                         clear_terminal()
                         one_player_screen()
-                        ANSWER = random.choice(POSSIBLE_WORDS_1P)
+                        ANSWER = random.choice(list(POSSIBLE_WORDS_1P))
                         DIFFICULTY_CHOICE = input(
                             "Would you like to play Easy, Medium, or Hard?: "
                         ).lower()
@@ -196,7 +196,6 @@ def main() -> None:
                         break
                 case "h" | "help":
                     clear_terminal()
-                    # TODO make a help screen, just for funsies
                     help_screen_menu()
                     input()
                     continue
@@ -260,7 +259,7 @@ def main() -> None:
                 "\nPlease enter your choice from Available Letters: "
             ).lower()
             exit_check(guessed_char)
-            
+
             # checking if the user wants a hint or to quit the program
             if len(guessed_char) > 1:
                 if guessed_char == "hint" and DIFFICULTY_CHOICE != "h":
@@ -314,16 +313,15 @@ def main() -> None:
                     time.sleep(1.5)
                     break
                 continue
-            elif GUESSES:
-                pass
+
 
 
         while GAME_OVER or GAME_WIN:
-            # TODO: placeholder for asking if the player would like to play again
             user_answer = input("Would you like to play again? ( Y)es or N)o ): ")
             exit_check(user_answer)
-            # TODO: reset flags and variables to their previous state if the user wants to play again, use
-            # ONE_PLAYER and TWO_PLAYER flags
+
+            # reset flags and variables to their previous state if the user wants to play again,
+            # use ONE_PLAYER and TWO_PLAYER flags. separating this to reduce actions
             match user_answer:
                 case "y" | "yes":
                     if ONE_PLAYER:
@@ -360,9 +358,4 @@ if __name__ == "__main__":
     #     "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
     #     ]     this is for when black makes the list super long height wise, just copy and paste this instead of manually fixing
 
-# TODO: need to make a copy of AVAILABLE_LETTERS that can be changed on when the player is playing
-# and if the user chooses to play again, the copy can be taken off of the stack and a new copy can
-# be made for the new game, also need to work on giving the player hints
-
-
-# TODO: CONTINUE WORKING ON THE PLAYER BEING ABLE TO RESTART THE GAME IF THEY CHOOSE TO PLAY AGAIN
+# TODO: need to work on giving the player hints
