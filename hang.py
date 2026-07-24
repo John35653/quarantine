@@ -70,6 +70,7 @@ ONE_PLAYER: bool = False
 TWO_PLAYER: bool = False
 ONE_PLAYER_GIVE_HINT: bool = False
 ONE_PLAYER_OPTIONAL_HINT: bool = False
+HINT_DENIAL: bool = False
 GAME_BEGINS: bool = False
 GAME_WIN: bool = False
 GAME_OVER: bool = False
@@ -95,12 +96,31 @@ def exit_check(user_answer: str) -> None:
     """This is a function that checks if the user has typed "exit" or "Exit" to quit the program
 
     Args:
-        user_answer (str): The answer that the user gives when prompted for input
+        user_answer (str): The answer that the user gives when prompted for input. If the answer
+        is exit, the program will exit.
     """
     if user_answer == "exit":
         exit_message()
         time.sleep(1)
         sys.exit()
+
+def is_number(user_answer: str) -> bool:
+    """This is a riff on the is number to check if the user is typing numbers. By turning it into
+    a double, with try and except we can convert the answer to a double, which will accept integers.
+    Anything else and it returns false.
+
+    Args:
+        user_answer (str): A string the user gives 
+
+    Returns:
+        bool: True if the number was able to be cast as a double, otherwise returns false, likely 
+        indicating the user gave either a char or string.
+    """
+    try:
+        float(user_answer)
+        return True
+    except ValueError:
+        return False
 
 
 def usage_message() -> None:
@@ -111,12 +131,12 @@ def usage_message() -> None:
     time.sleep(1.5)
 
 
-def main() -> None:
+def main() -> None: # pylint: disable=too-many-branches, too-many-statements
     """This is the main function of the hangman program"""
     global ONE_PLAYER_SCREEN_DONE, TWO_PLAYER_SCREEN_DONE, ONE_PLAYER, ONE_PLAYER_GIVE_HINT
     global TWO_PLAYER, GUESSES, MAIN_MENU_DONE, DIFFICULTY_CHOICE, UNDERSCORE_WORD
     global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER, GAME_WIN
-    global AVAILABLE_LETTERS
+    global AVAILABLE_LETTERS, HINT_DENIAL
 
     # ----------------------------------------MAIN-MENU---------------------------------------------
 
@@ -189,14 +209,19 @@ def main() -> None:
                                 TWO_PLAYER = True
                                 TWO_PLAYER_SCREEN_DONE = True
                                 MAIN_MENU_DONE = True
+                                ONE_PLAYER_OPTIONAL_HINT = True
+            # tired of making flags, reusing this ^ one for two player hint
                                 break
                             case "n" | "no":
                                 ANSWER = input(
                                     "Please enter the word you want the user to guess: "
                                 ).lower()
+                                if ANSWER == "b":
+                                    break
                                 TWO_PLAYER = True
                                 TWO_PLAYER_SCREEN_DONE = True
                                 MAIN_MENU_DONE = True
+                                HINT_DENIAL = True
                                 break
                             case _:
                                 usage_message()
@@ -258,12 +283,7 @@ def main() -> None:
                 GAME_BEGINS = True
             if ONE_PLAYER_GIVE_HINT:
                 print(
-                    "Word: "
-                    + UNDERSCORE_WORD
-                    + "     Guesses left: "
-                    + str(6 - GUESSES)
-                    + "    hint: "
-                    + PLAYER_HINT
+                    "Word: " + UNDERSCORE_WORD + "     Guesses left: " + str(6 - GUESSES) + "    hint: " + PLAYER_HINT
                 )
             else:
                 print(
@@ -285,19 +305,28 @@ def main() -> None:
             # CHECKING IF THE USER WANTS A HINT OR TO QUIT THE GAME
             if len(guessed_char) > 1:
                 if guessed_char == "hint" and DIFFICULTY_CHOICE != "h":
-                    if ONE_PLAYER_OPTIONAL_HINT:
+                    if HINT_DENIAL:
+                        print("\nThe other person you are playing with has decided to not "
+                              "provide a hint to you.")
+                        time.sleep(1.5)
+                    elif ONE_PLAYER_OPTIONAL_HINT:
                         ONE_PLAYER_GIVE_HINT = True
-                    # time.sleep(1.5)
                 elif DIFFICULTY_CHOICE == "h":
-                    print("You are on hard and can not receive hints.")
+                    print("\nYou are on hard and can not receive hints.")
                     time.sleep(1.5)
                 else:
                     usage_message()
                 continue
 
                 # CHECKING TO SEE IF THE CHAR IS AVAILABLE
+            is_num: bool = is_number(guessed_char)
+            if is_num:
+                print(f"\n Your choice: {guessed_char} is not part of the available letters. "
+                      "Please try again.")
+                time.sleep(1.5)
+                continue
             if guessed_char not in AVAILABLE_LETTERS:
-                print("You have already guessed that letter. Please try again.")
+                print(f"\nThe letter {guessed_char} is not available. Please try again.")
                 time.sleep(1.5)
                 continue
 
@@ -327,10 +356,10 @@ def main() -> None:
             elif guessed_char not in ANSWER:
                 GUESSES += 1
                 if 0 < GUESSES < 6:
-                    print("That is not correct. Plase try again.")
+                    print("\nThat is not correct. Plase try again.")
                     time.sleep(1.5)
                 elif GUESSES == 6:
-                    print("Oops, you're all out of guesses.")
+                    print("\nOops, you're all out of guesses.")
                     time.sleep(1.5)
                     break
                 continue
@@ -348,12 +377,12 @@ def main() -> None:
                     if ONE_PLAYER:
                         ONE_PLAYER_SCREEN_DONE = False
                         ONE_PLAYER = False
-                        ONE_PLAYER_GIVE_HINT = False
-                        ONE_PLAYER_OPTIONAL_HINT = False
                         DIFFICULTY_CHOICE = ""
                     if TWO_PLAYER:
                         TWO_PLAYER_SCREEN_DONE = False
                         TWO_PLAYER = False
+                    ONE_PLAYER_GIVE_HINT = False
+                    ONE_PLAYER_OPTIONAL_HINT = False
                     PLAYER_HINT = ""
                     MAIN_MENU_DONE = False
                     ANSWER = ""
