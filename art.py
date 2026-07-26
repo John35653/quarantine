@@ -197,3 +197,11 @@ def game_over_screen() -> None:  # pylint: disable=missing-function-docstring
                                                           
 
 """)
+
+def hangman_saved() -> None: # pylint: disable = missing-function-docstring
+    print("""\033[1;92m
+                0
+               \\|/     YAY!!! I'M SAVED
+               / \\     \033[0m
+          
+""")
