@@ -49,32 +49,8 @@ POSSIBLE_WORDS_1P: dict = {
 }
 
 BASE_LETTERS = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
+   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+   "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 ]
 
 
@@ -159,10 +135,10 @@ def usage_message() -> None:
 
 def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
     """This is the main function of the hangman program"""
-    global ONE_PLAYER_SCREEN_DONE, TWO_PLAYER_SCREEN_DONE, ONE_PLAYER, ONE_PLAYER_GIVE_HINT
-    global TWO_PLAYER, GUESSES, MAIN_MENU_DONE, DIFFICULTY_CHOICE, UNDERSCORE_WORD
-    global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER, GAME_WIN
-    global AVAILABLE_LETTERS, HINT_DENIAL
+    global ONE_PLAYER_SCREEN_DONE, TWO_PLAYER_SCREEN_DONE, ONE_PLAYER, ONE_PLAYER_GIVE_HINT  # pylint: disable=global-statement
+    global TWO_PLAYER, GUESSES, MAIN_MENU_DONE, DIFFICULTY_CHOICE, UNDERSCORE_WORD  # pylint: disable=global-statement
+    global ONE_PLAYER_OPTIONAL_HINT, PLAYER_HINT, ANSWER, GAME_BEGINS, GAME_OVER, GAME_WIN  # pylint: disable=global-statement
+    global AVAILABLE_LETTERS, HINT_DENIAL  # pylint: disable=global-statement
 
     # ----------------------------------------MAIN-MENU---------------------------------------------
 

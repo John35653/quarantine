@@ -1,5 +1,5 @@
 """For now this is where all of the basic art will be stored for the hangman game"""
-
+# pyright: reportInvalidStringEscapeSequence=false
 # pylint: disable=anomalous-backslash-in-string
 
 
