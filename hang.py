@@ -327,7 +327,7 @@ def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
                     usage_message()
                 continue
 
-                # CHECKING TO SEE IF THE CHAR IS AVAILABLE
+                # CHECKING TO SEE IF THE CHAR IS AVAILABLE OR IF THEY EVEN ENTERED A LETTER
             is_num: bool = is_number(guessed_char)
             if is_num:
                 print(
@@ -406,6 +406,7 @@ def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
                     GUESSES = 0
                     GAME_WIN = False
                     GAME_OVER = False
+                    HINT_DENIAL = False
                     AVAILABLE_LETTERS = BASE_LETTERS.copy()
                 case "n" | "no":  # IF NO, SAY GOOBYE AND QUIT THE GAME NICELY
                     print("Thank you for playing, have a wonderful day!")
