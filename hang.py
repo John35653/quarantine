@@ -9,6 +9,8 @@ import os
 import subprocess
 import sys
 import time
+import urllib.request
+import json
 from art import (
     beginning,
     first_wrong,
@@ -24,6 +26,22 @@ from art import two_player_screen, you_win_screen, game_over_screen
 # if you would like to add more words, in python, to add something to a dictionary you would do:
 # "word": "hint for the word",  <- make sure to also put the comma for more words that you would
 # like to add later
+
+# Software information
+VERSION = "v1.0.0"
+REPO = "John35653/Hangman-py"
+
+def program_update():
+    """A function to check if the program is up to date and if so, to get the new
+    version from Github releases.
+    """
+    print("Checking for update",end=" ")
+    sys.stdout.flush()
+    time.sleep(1)
+    for _ in range(3):
+        print(".",end=" ")
+        sys.stdout.flush()
+        time.sleep(1)
 
 POSSIBLE_WORDS_1P: dict = {
     "hello": "A greeting",

@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 
+notes.txt
 test.py
 .vscode
 .vscode/
