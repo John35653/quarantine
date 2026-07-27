@@ -5,3 +5,8 @@ notes.txt
 test.py
 .vscode
 .vscode/
+*.exe
+*.o
+*.obj
+.vs/
+*.log
