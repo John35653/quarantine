@@ -10,3 +10,6 @@ test.py
 *.obj
 .vs/
 *.log
+build/
+dist/
+*.spec
