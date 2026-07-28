@@ -150,6 +150,17 @@ def usage_message() -> None:
     print("\nThat is not a valid option. Please choose from the possible options\n")
     time.sleep(1.5)
 
+def trying_something(x: int)  -> int:
+    """This is for practicing unit testing in Python.
+
+    Args:
+        x (int): This is the input that is to be squared.
+
+    Returns:
+        int: This is the return result of squaring the given input.
+    """
+    return x * x
+
 
 def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
     """This is the main function of the hangman program"""
@@ -271,6 +282,7 @@ def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
 
         # ---------------------------------------END-OF-MAIN-MENU-----------------------------------
         # ------------------------------------------GAME-BEGINS-------------------------------------
+        # PRINTING HANGMAN
         while MAIN_MENU_DONE and not GAME_OVER:
             if GUESSES == 0:
                 clear_terminal()
@@ -347,6 +359,8 @@ def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
 
                 # CHECKING TO SEE IF THE CHAR IS AVAILABLE OR IF THEY EVEN ENTERED A LETTER
             is_num: bool = is_number(guessed_char)
+            # Looking back, I didn't need to do this but was still cool to be able to differentiate
+            # if the user had entered a number or a char.
             if is_num:
                 print(
                     f"\n Your choice: {guessed_char} is not part of the available letters. "
