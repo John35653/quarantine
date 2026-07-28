@@ -1,7 +1,7 @@
 __pycache__/
 *.pyc
 
-notes.txt
+brainstorming.md
 test.py
 .vscode
 .vscode/
