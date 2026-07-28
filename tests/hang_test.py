@@ -33,5 +33,3 @@ def test_is_number(input_string, expected):
 def test_trying_something(input_n, squared):
     "Trying something"
     assert src.hang.trying_something(input_n) == squared
-
-
