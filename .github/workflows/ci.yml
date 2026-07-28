@@ -1,0 +1,19 @@
+# This is a testing script using Github actions. While this is a cool idea and certainly easy
+# I don't know if I'm experienced enough to offload it without knowing what I'm abstracting from.
+# Will look into pytest first for testing and then learn about CI/CD
+
+name: CI Pipeline
+
+on:
+    push:
+        branches: [main]
+    pull_requests:
+        branches: [main]
+
+jobs:
+    test:
+        runs-on: windows-latest
+
+        steps:
+            - name: Check out the code
+              uses:

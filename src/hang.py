@@ -11,7 +11,7 @@ import sys
 import time
 import urllib.request
 import json
-from art import (
+from src.art import (
     beginning,
     first_wrong,
     second_wrong,
@@ -20,8 +20,8 @@ from art import (
     fifth_wrong,
     hangman_saved,
 )
-from art import final_wrong, main_menu_screen, help_screen_menu, one_player_screen
-from art import two_player_screen, you_win_screen, game_over_screen
+from src.art import final_wrong, main_menu_screen, help_screen_menu, one_player_screen
+from src.art import two_player_screen, you_win_screen, game_over_screen
 
 # if you would like to add more words, in python, to add something to a dictionary you would do:
 # "word": "hint for the word",  <- make sure to also put the comma for more words that you would
@@ -31,17 +31,17 @@ from art import two_player_screen, you_win_screen, game_over_screen
 VERSION = "v1.0.0"
 REPO = "John35653/Hangman-py"
 
-def program_update():
-    """A function to check if the program is up to date and if so, to get the new
-    version from Github releases.
-    """
-    print("Checking for update",end=" ")
-    sys.stdout.flush()
-    time.sleep(1)
-    for _ in range(3):
-        print(".",end=" ")
-        sys.stdout.flush()
-        time.sleep(1)
+# def program_update():
+#     """A function to check if the program is up to date and if so, to get the new
+#     version from Github releases.
+#     """
+#     print("Checking for update",end=" ")
+#     sys.stdout.flush()
+#     time.sleep(1)
+#     for _ in range(3):
+#         print(".",end=" ")
+#         sys.stdout.flush()
+#         time.sleep(1)
 
 POSSIBLE_WORDS_1P: dict = {
     "hello": "A greeting",
