@@ -11,7 +11,7 @@ import sys
 import time
 import urllib.request
 import json
-from src.art import (
+from art import (
     beginning,
     first_wrong,
     second_wrong,
@@ -20,8 +20,8 @@ from src.art import (
     fifth_wrong,
     hangman_saved,
 )
-from src.art import final_wrong, main_menu_screen, help_screen_menu, one_player_screen
-from src.art import two_player_screen, you_win_screen, game_over_screen
+from art import final_wrong, main_menu_screen, help_screen_menu, one_player_screen
+from art import two_player_screen, you_win_screen, game_over_screen
 
 # if you would like to add more words, in python, to add something to a dictionary you would do:
 # "word": "hint for the word",  <- make sure to also put the comma for more words that you would
@@ -350,7 +350,7 @@ def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
                         time.sleep(1.5)
                     elif ONE_PLAYER_OPTIONAL_HINT:
                         ONE_PLAYER_GIVE_HINT = True
-                elif DIFFICULTY_CHOICE == "h":
+                elif guessed_char == "hint" and DIFFICULTY_CHOICE == "h":
                     print("\nYou are on hard and can not receive hints.")
                     time.sleep(1.5)
                 else:
@@ -363,7 +363,7 @@ def main() -> None:  # pylint: disable=too-many-branches, too-many-statements
             # if the user had entered a number or a char.
             if is_num:
                 print(
-                    f"\n Your choice: {guessed_char} is not part of the available letters. "
+                    f"\nYour choice: {guessed_char} is not part of the available letters. "
                     "Please try again."
                 )
                 time.sleep(1.5)
